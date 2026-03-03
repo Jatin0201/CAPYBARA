@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Capybara Hydration Tracker</title>
+
+<style>
+
+body{
+font-family: Arial;
+text-align: center;
+background-color: #fff3e0;
+}
+
+h1{
+color:#6d4c41;
+}
+
+img{
+width:200px;
+margin-top:20px;
+}
+
+button{
+padding:10px;
+font-size:16px;
+margin-top:15px;
+}
+
+#glassesDisplay{
+font-size:30px;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Capybara Hydration Tracker</h1>
+
+<p id="date"></p>
+
+<p>Habit: Glasses of Water / Day</p>
+
+<p>Water: <span id="glasses">0</span> / 9 Glasses</p>
+
+<div id="glassesDisplay"></div>
+
+<img src="https://i.pinimg.com/736x/15/11/9b/15119bae61e244856ec2da88b4d83584.jpg">
+
+<p id="mood">Capybara Mood: Angry 😠</p>
+
+<button onclick="drinkWater()">Drink Water</button>
+
+<script>
+
+let today = new Date().toDateString();
+
+document.getElementById("date").innerHTML =
+"Today: " + today;
+
+let goal = 9;
+
+/* Load saved glasses count */
+let glasses = Number(localStorage.getItem("glasses")) || 0;
+
+/* Check if a new day started */
+let lastDay = localStorage.getItem("lastDay");
+
+if(lastDay !== today){
+
+glasses = 0;
+
+localStorage.setItem("lastDay", today);
+
+localStorage.setItem("glasses", glasses);
+
+}
+
+/* Show saved progress on page */
+document.getElementById("glasses").innerHTML = glasses;
+
+drawGlasses();
+updateMood();
+
+
+function drinkWater(){
+
+if(glasses < goal){
+
+glasses++;
+
+document.getElementById("glasses").innerHTML = glasses;
+
+/* Save progress */
+localStorage.setItem("glasses", glasses);
+
+drawGlasses();
+
+updateMood();
+
+}
+
+}
+
+
+function updateMood(){
+
+let mood = "";
+
+if(glasses < 5){
+
+mood = "Angry 😠";
+
+}
+else if(glasses >= 5 && glasses < 9){
+
+mood = "Satisfied 🙂";
+
+}
+else{
+
+mood = "Super Hydrated 😎";
+
+}
+
+document.getElementById("mood").innerHTML =
+"Capybara Mood: " + mood;
+
+}
+
+
+function drawGlasses(){
+
+let display = "";
+
+for(let i = 1; i <= goal; i++){
+
+if(i <= glasses){
+
+display += "🥛";
+
+}
+else{
+
+display += "⚪";
+
+}
+
+}
+
+document.getElementById("glassesDisplay").innerHTML = display;
+
+}
+
+</script>
+<br>
+<br>
+Capy is always proud of you and loves you<3
+<br>
+<br> 
+© ALL COPYRIGHTS RESERVED
+</body>
+
+</html>
